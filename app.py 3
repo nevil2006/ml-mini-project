@@ -1,0 +1,27 @@
+import pandas as pd
+from sklearn.tree import DecisionTreeClassifier
+from sklearn import tree
+
+# Load the data
+music_data = pd.read_csv('music.csv')
+
+# Prepare the data
+X = music_data.drop(columns=['genre'])
+y = music_data['genre']
+
+# Train the model
+model = DecisionTreeClassifier()
+model.fit(X, y)
+
+# Export the decision tree to a dot file
+tree.export_graphviz(
+    model, 
+    out_file="music-recommender.dot",  # Correct parameter name
+    feature_names=['age', 'gender'],   # Correct parameter name
+    class_names=sorted(y.unique()), 
+    label='all', 
+    rounded=True, 
+    filled=True
+)
+
+print("Decision tree exported to 'music-recommender.dot'")
